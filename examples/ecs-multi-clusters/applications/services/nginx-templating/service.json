@@ -1,0 +1,12 @@
+{
+  "launchType": "FARGATE",
+  "platformVersion": "LATEST",
+  "networkConfiguration": {
+    "awsvpcConfiguration": {
+      "assignPublicIp": "ENABLED",
+      "securityGroups": ["{{.Constants.securityGroup}}"],
+      "subnets": ["{{.Constants.subnet}}"]
+    }
+  },
+  "desiredCount": 1
+}

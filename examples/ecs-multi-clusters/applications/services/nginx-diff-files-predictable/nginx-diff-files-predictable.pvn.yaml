@@ -1,0 +1,20 @@
+# this Service showcases how to use different service definitions for different release channels
+# by templating the service definition path
+service:
+  name: nginx-diff-files-predictable
+  application: ecs-multi-clusters
+  awsEcs:
+    taskDefinition:
+      local:
+        path: task.json
+    serviceDefinition:
+      local:
+        path: .
+        subPath: service-{{.Builtins.ReleaseChannel.Name}}.json
+  parameters:
+    - name: image
+      required: true
+      dockerImage:
+        imageRegistryInfo:
+          containerRegistry: dockerhub-public
+          imageRepository: library/nginx

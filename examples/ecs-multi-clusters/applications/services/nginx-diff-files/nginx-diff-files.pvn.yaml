@@ -1,0 +1,27 @@
+# this Service showcases how to use different service definitions for different release channels
+# by explicitly specifying the service definition for each release channel
+service:
+  name: nginx-diff-files
+  application: ecs-multi-clusters
+  awsEcs:
+    taskDefinition:
+      local:
+        path: task.json
+  perReleaseChannel:
+    - releaseChannel: staging
+      awsEcs:
+        serviceDefinition:
+          local:
+            path: service-staging.json
+    - releaseChannel: production
+      awsEcs:
+        serviceDefinition:
+          local:
+            path: service-production.json
+  parameters:
+    - name: image
+      required: true
+      dockerImage:
+        imageRegistryInfo:
+          containerRegistry: dockerhub-public
+          imageRepository: library/nginx

@@ -1,0 +1,27 @@
+application:
+  name: ecs-multi-clusters
+  releaseChannels:
+    - name: staging
+      runtimes:
+        - runtime: ecs-staging # replace with your ECS Runtime
+      constants: # used by the Service nginx-templating
+        - name: securityGroup
+          string:
+            value: sg-123456
+        - name: subnet
+          string:
+            value: subnet-123456
+    - name: production
+      runtimes:
+        - runtime: ecs-prod # replace with your ECS Runtime
+      constants: # used by the Service nginx-templating
+        - name: securityGroup
+          string:
+            value: sg-654321
+        - name: subnet
+          string:
+            value: subnet-654321
+      preconditions:
+        - releaseChannelStable:
+            releaseChannel: staging
+        - manualApproval: {}

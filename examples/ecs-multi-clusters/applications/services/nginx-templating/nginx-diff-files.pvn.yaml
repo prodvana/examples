@@ -1,0 +1,19 @@
+# this Service showcases how to use different service definitions for different release channels
+# by using constants defined in the Application configuration.
+service:
+  name: nginx-templating
+  application: ecs-multi-clusters
+  awsEcs:
+    taskDefinition:
+      local:
+        path: task.json
+    serviceDefinition:
+      local:
+        path: service.json
+  parameters:
+    - name: image
+      required: true
+      dockerImage:
+        imageRegistryInfo:
+          containerRegistry: dockerhub-public
+          imageRepository: library/nginx
