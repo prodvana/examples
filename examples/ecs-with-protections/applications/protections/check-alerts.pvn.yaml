@@ -1,0 +1,11 @@
+protection:
+  name: check-alerts
+  taskConfig:
+    program:
+      cmd:
+        # bogus Protection implementation, replace with your actual implementation here
+        - /bin/true
+      imageTag: 3.10.3-slim
+      imageRegistryInfo:
+        containerRegistry: dockerhub-public
+        imageRepository: library/python

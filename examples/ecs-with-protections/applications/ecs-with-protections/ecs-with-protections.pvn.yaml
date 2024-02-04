@@ -1,0 +1,15 @@
+application:
+  name: ecs-with-protections
+  releaseChannels:
+    - name: staging
+      runtimes:
+        - runtime: ecs-staging # replace with your ECS Runtime
+        - runtime: kubernetes # replace with your Kubernetes Runtime where Protections should run
+      protections:
+        - ref:
+            name: check-alerts
+          lifecycle:
+            - preApproval: {}
+            - postApproval: {}
+            - postDeployment:
+                checkDuration: 5s

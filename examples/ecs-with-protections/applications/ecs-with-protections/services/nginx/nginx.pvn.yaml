@@ -1,0 +1,17 @@
+service:
+  name: nginx
+  application: ecs-with-protections
+  awsEcs:
+    taskDefinition:
+      local:
+        path: task.json
+    serviceDefinition:
+      local:
+        path: service.json
+  parameters:
+    - name: image
+      required: true
+      dockerImage:
+        imageRegistryInfo:
+          containerRegistry: dockerhub-public
+          imageRepository: library/nginx
