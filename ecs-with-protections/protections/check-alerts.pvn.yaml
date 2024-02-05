@@ -1,5 +1,5 @@
 protection:
-  name: check-alerts
+  name: check-db-migrated
   taskConfig:
     program:
       cmd:

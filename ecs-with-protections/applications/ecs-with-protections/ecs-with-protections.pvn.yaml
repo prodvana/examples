@@ -7,7 +7,7 @@ application:
         - runtime: kubernetes # replace with your Kubernetes Runtime where Protections should run
       protections:
         - ref:
-            name: check-alerts
+            name: check-db-migrated
           lifecycle:
             - preApproval: {}
             - postApproval: {}
