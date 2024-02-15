@@ -1,0 +1,23 @@
+application:
+  name: ecs-with-analysis
+  releaseChannels:
+    - name: canary
+      runtimes:
+        - runtime: ecs-prod # replace with your ECS Runtime
+        - runtime: kubernetes # replace with your Kubernetes Runtime where the analysis script will run
+    - name: prod-1
+      runtimes:
+        - runtime: ecs-prod # replace with your ECS Runtime
+        - runtime: kubernetes # replace with your Kubernetes Runtime where the analysis script will run
+      preconditions:
+        - releaseChannelStable:
+            releaseChannel: canary
+        - manualApproval: {}
+    - name: prod-2
+      runtimes:
+        - runtime: ecs-prod # replace with your ECS Runtime
+        - runtime: kubernetes # replace with your Kubernetes Runtime where the analysis script will run
+      preconditions:
+        - releaseChannelStable:
+            releaseChannel: canary
+        - manualApproval: {}

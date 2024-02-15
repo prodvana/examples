@@ -1,0 +1,39 @@
+service:
+  name: nginx
+  application: ecs-with-analysis
+  awsEcs:
+    ecsServiceNameOverride: nginx-{{.Builtins.ReleaseChannel.Name}} # avoid name collision on ECS cluster as all services are deployed to the same cluster
+    taskDefinition:
+      local:
+        path: task.json
+    serviceDefinition:
+      local:
+        path: service.json
+  convergenceExtensionInstances:
+    # define a single Convergence Extension whose result will be used by both prod-1 and prod-2 Release Channels
+    - name: canary-analysis
+      inlined:
+        taskConfig:
+          program:
+            image: python:3.11 # replace with your analysis script image. Use `{{.Params.image.Tag}}` if the script should be versioned together with the image being deployed to the Service
+            cmd:
+              - /bin/bash
+              - -eux
+              - -c
+              - "echo 'Analysis succeeded for canary deployment'" # replace with actual analysis command
+  perReleaseChannel:
+    - releaseChannel: prod-1
+      convergenceExtensions:
+        - instance: canary-analysis
+          lifecycle: POST_APPROVAL
+    - releaseChannel: prod-2
+      convergenceExtensions:
+        - instance: canary-analysis
+          lifecycle: POST_APPROVAL
+  parameters:
+    - name: image
+      required: true
+      dockerImage:
+        imageRegistryInfo:
+          containerRegistry: dockerhub-public
+          imageRepository: library/nginx
