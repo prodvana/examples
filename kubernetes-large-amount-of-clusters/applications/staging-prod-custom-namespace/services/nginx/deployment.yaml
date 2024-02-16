@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: "{{.Params.image}}"
+          ports:
+            - containerPort: 80
+          env:
+            - name: CUSTOMER
+              value: "{{.Builtins.Runtime.Name}}"
+            - name: ENV
+              value: "{{.Builtins.Runtime.Labels.env}}"
+            # NOTE: if tier is used here, then staging Runtimes must also define a tier otherwise this will be template error
+            - name: TIER
+              value: "{{.Builtins.Runtime.Labels.tier}}"

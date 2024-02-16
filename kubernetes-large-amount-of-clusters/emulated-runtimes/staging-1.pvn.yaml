@@ -1,0 +1,8 @@
+runtime:
+  name: staging-1
+  fake: {}
+  labels:
+    - label: env
+      value: staging
+    - label: tier
+      value: staging

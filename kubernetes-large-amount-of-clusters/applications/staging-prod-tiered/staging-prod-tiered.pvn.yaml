@@ -1,0 +1,20 @@
+# this application deploys to staging, startup + teams, then enterprise, with an approval step between each.
+application:
+  name: staging-prod-tiered
+  releaseChannelGroups:
+    - name: staging
+      runtimeSelector: env=staging
+    - name: startup-teams
+      runtimeSelector: env=production (tier=startup +tier=teams)
+      template:
+        preconditions:
+          - releaseChannelStable:
+              selector: "@group=staging"
+          - manualApproval: {}
+    - name: enterprise
+      runtimeSelector: env=production (tier=enterprise)
+      template:
+        preconditions:
+          - releaseChannelStable:
+              selector: "@group=startup-teams"
+          - manualApproval: {}

@@ -1,0 +1,19 @@
+# This nginx Service is deployed to all Runtimes, with the Runtime name (representing customer name),
+# the environment, and tier plumbed through as environment variables.
+# nginx doesn't actually use these environment variables, but it's a good example of how to pass
+# Runtime differences to a Service.
+service:
+  name: nginx
+  application: staging-prod-tiered
+  kubernetesConfig:
+    type: KUBERNETES
+    local:
+      path: .
+  parameters:
+    - name: image
+      description: "Container image for nginx deployment"
+      required: true
+      dockerImage:
+        imageRegistryInfo:
+          containerRegistry: dockerhub-public
+          imageRepository: library/nginx
