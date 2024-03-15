@@ -1,0 +1,25 @@
+service:
+  name: infra
+  application: terraform
+  perReleaseChannel:
+  - releaseChannel: staging
+    customRuntime:
+      parameterValues:
+      - name: image
+        string: "{{ .Params.image }}"
+      - name: path
+        string: /terraform/staging
+  - releaseChannel: production
+    customRuntime:
+      parameterValues:
+      - name: image
+        string: "{{ .Params.image }}"
+      - name: path
+        string: /terraform/production
+  parameters:
+    - name: image
+      required: true
+      dockerImage:
+        imageRegistryInfo:
+          containerRegistry: my-registry-name # replace this with the name of your container registry
+          imageRepository: repository/tf # replace  with the name of your repository

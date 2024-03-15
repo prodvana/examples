@@ -1,0 +1,9 @@
+runtime:
+  name: terraform-runner
+  terraformRunner:
+    serviceAccount: my-service-account # replace with the name of your pre-created service account with the necessary permissions
+    proxyRuntime:
+      runtime: proxy # replace this with the name of your Kubernetes Runtime
+      containerOrchestration:
+        k8s:
+          namespace: my-namespace  # replace with the name of your pre-created namespace
