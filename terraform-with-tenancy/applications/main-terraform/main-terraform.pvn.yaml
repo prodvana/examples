@@ -1,0 +1,10 @@
+application:
+  name: main-terraform
+  releaseChannels:
+    - name: production
+      runtimes:
+        - runtime: terraform-runner
+      preconditions:
+        - releaseChannelStable:
+            releaseChannel: staging
+        - manualApproval: {}

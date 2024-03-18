@@ -1,0 +1,18 @@
+service:
+  name: setup
+  application: tenant-terraform
+  customRuntime:
+    parameterValues:
+    - name: image
+      string: "{{ .Params.image }}"
+    - name: path
+      string: /terraform/tenant
+    - name: extraInitArgs
+      string: '--backend-config="bucket=tenant-state-bucket" --backend-config="prefix=tenant-terraform/{{ .Builtins.ReleaseChannel.Name }}/setup"'
+  parameters:
+    - name: image
+      required: true
+      dockerImage:
+        imageRegistryInfo:
+          containerRegistry: my-registry-name # replace this with the name of your container registry
+          imageRepository: repository/tf # replace  with the name of your repository

@@ -1,0 +1,13 @@
+service:
+  name: api
+  kubernetesConfig:
+    type: KUBERNETES
+    local:
+      path: . # look for Kubernetes resources in the same directory as this file
+  parameters:
+    - name: image
+      required: true
+      dockerImage:
+        imageRegistryInfo:
+          containerRegistry: photo-stack-registry # replace with your container registry
+          imageRepository: photo-stack/api # replace with your image repository
